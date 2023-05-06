@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logOut = () => {
-      signOut(auth)
+      signOut(auth);
   }
 
   useEffect(() => {  // Firebase 인증 상태의 변경을 구독
