@@ -22,7 +22,7 @@ const Account = () => {
     }
   }, [user]);
 
-  if (user == null) {  // 로그인되어있지 않음
+  if (user === null) {  // 로그인되어있지 않음
     return (
       <div>
         <h1>Account</h1>
@@ -31,7 +31,7 @@ const Account = () => {
         </div>
       </div>
     );
-    } else {  // 로그인되어 있음
+  } else {  // 로그인되어 있음
       return (
         <div>
           <h1>Account</h1>
@@ -39,7 +39,7 @@ const Account = () => {
             <p>{user?.displayName}님의 계정 페이지입니다.</p>
           </div>
           <Link to="/" onClick={handleSignOut}>
-            Logout
+            로그아웃
           </Link>
         </div>
       );

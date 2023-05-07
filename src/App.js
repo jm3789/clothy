@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import { AuthContextProvider } from './context/AuthContext';
 import Login from './pages/Login';
 import Account from './pages/Account';
+import Form from './pages/Form';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/form" element={<Form />} />
       </Routes>
       </AuthContextProvider>
     </div>

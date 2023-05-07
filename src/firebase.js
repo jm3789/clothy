@@ -4,7 +4,7 @@ import { getAnalytics } from "firebase/analytics";
 // firebase: 사용자 인증 관련 기능을 제공함
 import { getAuth } from "firebase/auth";
 // firebase: 실시간 DB인 firestore을 제공함
-import {getFirestore} from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
