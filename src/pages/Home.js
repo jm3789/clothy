@@ -8,7 +8,6 @@ import Post from '../components/Post';
 const Home = () => {
     const { user } = UserAuth();
 
-    // const [post, setPost] = useState("");
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {  
@@ -37,6 +36,16 @@ const Home = () => {
                 <div>
                 <Link to="/Login">로그인</Link>
                 </div>
+                <div>
+                    <hr/>
+                    {posts.map((post) => (
+                    <Post
+                        key={post.id}
+                        postObj={post}         
+                        isOwner={post.creatorId === user?.displayName} // boolean 값: 게시물 작성자만 삭제 버튼을 볼 수 있음
+                    />
+                    ))}
+                </div>
             </div>
         );
     } else {  // 로그인되어 있음
@@ -55,7 +64,7 @@ const Home = () => {
                     <Post
                         key={post.id}
                         postObj={post}         
-                        isOwner={post.creatorId === user.displayName} // boolean 값: 게시물 작성자만 삭제 버튼을 볼 수 있음
+                        isOwner={post.creatorId === user?.displayName} // boolean 값: 게시물 작성자만 삭제 버튼을 볼 수 있음
                     />
                     ))}
                 </div>
