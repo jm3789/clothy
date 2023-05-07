@@ -6,10 +6,10 @@ const Navbar = () => {
         <nav>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/">홈</Link>
         </li>
         <li>
-          <Link to="/login">Log in</Link>
+          <Link to="/Account">내 정보</Link>
         </li>
       </ul>
     </nav>

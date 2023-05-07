@@ -17,7 +17,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user != null) {
-      navigate('/account');  // 사용자가 로그인하면 자동으로 /account 페이지로 이동
+      navigate('/account');  // 사용자가 로그인되어 있으면 자동으로 account 페이지로 이동
     }
   }, [user]);
 

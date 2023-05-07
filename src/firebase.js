@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // firebase: 사용자 인증 관련 기능을 제공함
 import { getAuth } from "firebase/auth";
+// firebase: 실시간 DB인 firestore을 제공함
+import {getFirestore} from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -24,3 +26,4 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);  // 인증 서비스 반환
+export const db = getFirestore(app);  // firestore와 연결
