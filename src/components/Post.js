@@ -10,11 +10,15 @@ const Post = ({ postObj, isOwner }) => {
       await deleteDoc(doc(db, "posts", postObj.id));
     }
   };
+  
+  
+
   return (
     <div>  {/* 게시물 정보 표시*/}
+      <h4>{postObj.title}</h4>
       <h4>{postObj.text}</h4>
-      <h4>{postObj.createdAt}</h4>
-      <h4>{postObj.creatorId}</h4>
+      <img src={postObj.image} alt="db image값" width="280" height="180"/>  {/* 이미지 표시 */}
+      <h4>{postObj.createdAt} | {postObj.creatorId}</h4>
       {isOwner && ( // 게시물 작성자만 삭제 버튼을 볼 수 있음
         <> 
           <button onClick={onDeleteClick}>삭제</button>
