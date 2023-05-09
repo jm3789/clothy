@@ -10,6 +10,7 @@ import { AuthContextProvider } from './context/AuthContext';
 import Login from './pages/Login';
 import Account from './pages/Account';
 import Form from './pages/Form';
+import Search from './pages/Search';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/account" element={<Account />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
       </AuthContextProvider>
     </div>

@@ -22,6 +22,7 @@ const Home = () => {
             }));
             setPosts(postArray);
         });
+
         // 컴포넌트가 unmount될 때 Firestore 구독을 해제
         return unsubscribe;
     }, []);
@@ -35,6 +36,7 @@ const Home = () => {
                 </div>
                 <div>
                 <Link to="/Login">로그인</Link>
+                <Link to="/Search">태그로 검색</Link>
                 </div>
                 <div>
                     <hr/>
@@ -56,10 +58,11 @@ const Home = () => {
                     <p>가장 먼저 보여지는 페이지입니다. 안녕하세요, {user?.displayName}님!</p>
                 </div>
                 <div>
+                    <Link to="/Search">태그로 검색</Link>
                     <Link to="/Form">글쓰기</Link>
                 </div>
-                <div>
                     <hr/>
+                <div id="postList">
                     {posts.map((post) => (
                     <Post
                         key={post.id}
