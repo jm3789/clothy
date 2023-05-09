@@ -6,7 +6,7 @@ import { getAuth } from "firebase/auth";
 // firebase: 실시간 DB인 firestore을 제공함
 import { getFirestore } from 'firebase/firestore';
 // firebase: 실시간 Storage를 제공함
-// import { getStorage } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -30,4 +30,4 @@ const analytics = getAnalytics(app);
 
 export const auth = getAuth(app);  // 인증 서비스 반환
 export const db = getFirestore(app);  // firestore와 연결
-// export const storage = getStorage(app);  // storage 사용
+export const storage = getStorage(app);  // storage 사용

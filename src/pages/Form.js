@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { db } from '../firebase';
 import { addDoc, collection } from "firebase/firestore";
+import { storage } from '../firebase';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
 const Form = () => {
@@ -21,29 +23,46 @@ const Form = () => {
   const [post, setPost] = useState("");
   const [titleValue, setTitleValue] = useState("");
   const [textValue, setTextValue] = useState("");
-  const [imageValue, setImageValue] = useState("");
 
 
+  
   const onSubmit = async (event) => {
     event.preventDefault();
+    
+    // firebase storage에 이미지 저장
+    var file = document.querySelector('#image').files[0];
+    // storage 참조 생성
+    var now = new Date();
+    var nowMilli = now.getTime()
+    const storageRef = ref(storage, `image/${nowMilli}`);
+    await uploadBytes(storageRef, file);  // 파일 업로드
+    // 업로드된 파일의 다운로드 URL 가져와서 반환
+    const downloadURL = await getDownloadURL(storageRef);
 
-    // 현재 시각 구하기
-    var today = new Date();
-    var year = today.getFullYear();
-    var month = ('0' + (today.getMonth() + 1)).slice(-2);
-    var day = ('0' + today.getDate()).slice(-2);
-    var dateString = year + '-' + month  + '-' + day;
-    var hours = ('0' + today.getHours()).slice(-2); 
-    var minutes = ('0' + today.getMinutes()).slice(-2);
-    var seconds = ('0' + today.getSeconds()).slice(-2); 
-    var timeString = hours + ':' + minutes  + ':' + seconds;
+    // firestore에 저장
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const date = now.getDate();
+    const hours = now.getHours()
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const formattedDate 
+    = year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + seconds;
     await addDoc(collection(db, "posts"), 
-    { title: titleValue, text: textValue, image: imageValue, 
-      createdAt: dateString + " " + timeString, creatorId: user?.displayName });
-    setPost("");
+    { title: titleValue, text: textValue, downloadURL: downloadURL,
+      createdAt: formattedDate,
+      creatorId: user?.displayName });
+      setPost("");
+
+    
+
     alert("등록되었습니다!")
     navigate('/');
+    return downloadURL;
   };
+
+  
+  
 
   const onTitleChange = (event) => {
     const { value } = event.target;
@@ -63,16 +82,13 @@ const Form = () => {
 
     // 이미지 source 가져오기
   	const newImage = document.createElement("img");
-    const imageurl = window.URL.createObjectURL(file)
-    newImage.setAttribute("src", imageurl);
+    const imageURL = window.URL.createObjectURL(file)
+    newImage.setAttribute("src", imageURL);
     newImage.setAttribute("class", "img");
 
     newImage.style.width = "70%";
     newImage.style.height = "70%";
     newImage.style.objectFit = "contain";
-
-    // 가져온 blob url은 imageValue에 set해서 db로 옮김
-    setImageValue(imageurl);
 
     //이미지가 form에서 보이도록 image-show div에 추가
     var container = document.getElementById('image-show');
