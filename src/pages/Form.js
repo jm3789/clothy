@@ -55,7 +55,7 @@ const Form = () => {
     = year + '-' + month + '-' + date + ' ' + hours + ':' + minutes + ':' + seconds;
     await addDoc(collection(db, "posts"), 
     { title: titleValue, text: textValue, downloadURL: downloadURL, 
-      clothes1: clothes1Value, clothes2: clothes2Value,
+      clothes1: clothes1Value, clothes2: clothes2Value, createdMilli: nowMilli,
       createdAt: formattedDate, creatorId: user?.displayName });
 
     setPost("");
@@ -78,9 +78,6 @@ const Form = () => {
   const loadFile = (event) => {
     var file = event.target.files[0];	// 선택된 파일 가져오기
 
-    // div id를 이용해 이미지명 출력
-    var name = document.getElementById('fileName');
-    name.textContent = file.name;
 
     // 이미지 source 가져오기
   	const newImage = document.createElement("img");
@@ -146,12 +143,14 @@ const Form = () => {
 
   return (
     <div>
-      <h1>Post</h1>
+      <h3 style={{textAlign: 'left', marginLeft:'50px'}}>Post</h3>
 
-      <div>
+      <div style={{textAlign: 'left', marginLeft:'50px', lineHeight:'5px'}}>
         <p>게시글 작성 페이지입니다.</p>
         <p>작성자: {user?.displayName}님</p>
       </div>
+
+      <hr/>
 
       <div>
         <input
@@ -160,53 +159,57 @@ const Form = () => {
           type="text"
           placeholder="제목을 입력하세요"
           maxLength={120}
+          style={{ marginLeft: '50px' }}
         />
-        <input
-          value={textValue}
-          onChange={onTextChange}
-          type="text"
-          placeholder="내용을 입력하세요"
-          maxLength={120}
-        />
+        <br/>
+        
         <form method="post" enctype="multipart/form-data">
           <input 
             type="file" 
             id="image" 
             accept="image/*" 
-            onChange={loadFile} />
+            onChange={loadFile} 
+            style={{ marginLeft: '50px' }}
+            />
         </form>
-        <p>FILE NAME: </p>
-        <p id="fileName"></p>
+        
 
-        <div id="image-show" width="280" height="180"></div>
-
+        <div id="image-show" width="140" height="90" style={{ marginLeft: '50px' }}></div>
+        <textarea
+          value={textValue}
+          onChange={onTextChange}
+          placeholder="내용을 입력하세요"
+          maxLength={120}
+          style={{ height: '200px', marginLeft:'50px' }}
+        />
         <div>
-          <h4>종류선택1</h4>
-          <select id="clothes1" onChange={onTag1Change}>
-            <option value="">선택하세요</option>
-            <option value="아우터">아우터</option>
-            <option value="상의">상의</option>
-            <option value="바지">바지</option>
-            <option value="원피스">원피스</option>
-            <option value="스커트">스커트</option>
-            <option value="신발">신발</option>
-            <option value="가방">가방</option>
-            <option value="기타">기타</option>
-          </select>    
-          <h4>종류선택2{": "+ clothes1Value}</h4>
-          <select id="clothes2" onChange={onTag2Change} multiple>
+        <br/>
+        <span style={{textAlign: 'left', marginLeft:'50px'}}/>종류선택1
+        <span style={{textAlign: 'left', marginLeft:'80px'}}/>종류선택2{": "+ clothes1Value}
+        <br/>
+        <select id="clothes1" onChange={onTag1Change} style={{ marginLeft: '50px' }}>
+          <option value="">선택하세요</option>
+          <option value="아우터">아우터</option>
+          <option value="상의">상의</option>
+          <option value="바지">바지</option>
+          <option value="원피스">원피스</option>
+          <option value="스커트">스커트</option>
+          <option value="신발">신발</option>
+          <option value="가방">가방</option>
+          <option value="기타">기타</option>
+        </select>    
+        
+          <select id="clothes2" onChange={onTag2Change} style={{ marginLeft: '30px' }}>
             <option value="">선택하세요</option>
           </select>
         </div>
         
-        <h4>'{clothes1Value}'의 '{clothes2Value}'(으)로 선택하셨습니다.</h4>
-        <button onClick={onSubmit}>등록</button>
+        <h5 style={{textAlign: 'left', marginLeft:'50px'}}>'{clothes1Value}'의 '{clothes2Value}'(으)로 선택하셨습니다.</h5>
+        <button onClick={onSubmit} style={{float:'left', marginLeft:'50px'}}>등록</button>
 
       </div>
 
-      <div>
-      <Link to="/">뒤로</Link>
-      </div>
+      <button style={{float:'left', marginLeft:'20px'}}><Link to="/" style={{textDecoration: 'none', color: 'black'}}>뒤로</Link></button>
 
     </div>
   );

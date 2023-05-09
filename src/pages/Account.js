@@ -10,6 +10,7 @@ const Account = () => {
   const handleSignOut = async () => {
     try {
       await logOut();
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -25,22 +26,20 @@ const Account = () => {
   if (user === null) {  // 로그인되어있지 않음
     return (
       <div>
-        <h1>Account</h1>
-        <div>
-          <p>로그인 이후 이용 가능한 페이지입니다.</p>
-        </div>
       </div>
     );
   } else {  // 로그인되어 있음
       return (
         <div>
-          <h1>Account</h1>
+          <h3 style={{textAlign: 'left', marginLeft:'50px'}}>내 정보</h3>
           <div>
-            <p>{user?.displayName}님의 계정 페이지입니다.</p>
+            <p style={{textAlign: 'left', marginLeft:'50px'}}>{user?.displayName}님의 계정 페이지입니다.</p>
           </div>
-          <Link to="/" onClick={handleSignOut}>
+          <button onClick={handleSignOut} style={{textAlign: 'left', marginLeft:'20px'}}>
             로그아웃
-          </Link>
+          </button>
+          <button style={{float:'left', marginLeft:'50px'}}><Link to="/" style={{textDecoration: 'none', color: 'black'}}>홈으로</Link></button>
+          <hr/>
         </div>
       );
     }

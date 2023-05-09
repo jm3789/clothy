@@ -10,8 +10,8 @@ const Search = () => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {  
-        // query를 사용해 firestore의 posts 컬렉션을 가져오고, createdAt 필드를 기준으로 내림차순으로 정렬
-        const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+        // query를 사용해 firestore의 posts 컬렉션을 가져오고, createdMilli 필드를 기준으로 내림차순으로 정렬
+        const q = query(collection(db, "posts"), orderBy("createdMilli", "desc"));
         // q 쿼리에 대한 실시간 업데이트 구독
         const unsubscribe = onSnapshot(q, (snapshot) => {
         // 문서 데이터를 객체 배열로 변환
@@ -101,13 +101,15 @@ const Search = () => {
     return (
         <div>
             <div>
-            <h1>Search</h1>
-            <p>검색 페이지입니다.</p>
+            <h2 style={{textAlign: 'left', marginLeft:'50px'}}>Search</h2>
+            <p style={{textAlign: 'left', marginLeft:'50px'}}>검색 페이지입니다.</p>
             </div>
-
+            <hr/>
             <div>
-                <h4>종류선택1</h4>
-                <select id="clothes1" onChange={onTag1Change}>
+                <span style={{textAlign: 'left', marginLeft:'50px'}}/>종류선택1
+                <span style={{textAlign: 'left', marginLeft:'80px'}}/>종류선택2{": "+ clothes1Value}
+                <br/>
+                <select id="clothes1" onChange={onTag1Change} style={{marginTop:'10px', marginLeft:'50px'}}>
                     <option value="">선택하세요</option>
                     <option value="아우터">아우터</option>
                     <option value="상의">상의</option>
@@ -119,23 +121,24 @@ const Search = () => {
                     <option value="기타">기타</option>
                 </select>  
 
-                <h4>종류선택2{": "+ clothes1Value}</h4>
-                <select id="clothes2" onChange={onTag2Change} multiple>
+                <select id="clothes2" onChange={onTag2Change} style={{marginTop:'10px', marginLeft:'30px'}}>
                     <option value="">선택하세요</option>
                 </select>
             </div>
                 
             <div>
-                <h4>'{clothes1Value}'의 '{clothes2Value}'(으)로 선택하셨습니다.</h4>
-                <button onClick={onSearch}>검색</button>
+                <h5 style={{textAlign: 'left', marginLeft:'50px'}}>'{clothes1Value}'의 '{clothes2Value}'(으)로 선택하셨습니다.</h5>
+                <button onClick={onSearch} style={{float:'left', marginLeft:'50px'}}>검색</button>
             </div>
         
             <div>
-                <Link to="/">뒤로</Link>
+                <button style={{ float: 'left', marginLeft: '20px' }}>
+                    <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>뒤로</Link>
+                </button>
             </div>
-            
+            <br/>
             <hr/>
-            <div id="searchNotice"></div>
+            <div id="searchNotice" style={{textAlign: 'left', marginLeft:'50px'}}></div>
             <div id="postList">
                 {filteredPosts.map((post) => (
                     <Post

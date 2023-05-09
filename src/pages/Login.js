@@ -23,9 +23,10 @@ const Login = () => {
 
   return (
     <div>
-      <h1>로그인</h1>
-      <div>
-        <GoogleButton onClick={handleGoogleSignIn} />
+      <hr/>
+      <h1 style={{textAlign: 'center', marginTop:'50px'}}>Log in</h1>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}>
+        <GoogleButton onClick={handleGoogleSignIn}/>
       </div>
     </div>
   );
