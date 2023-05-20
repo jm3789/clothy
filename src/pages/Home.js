@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { db } from '../firebase';
 import { onSnapshot, collection, orderBy, query } from "firebase/firestore"
+import { Container, Row, Col } from 'react-bootstrap';
 import Post from '../components/Post';
 
 const Home = () => {
@@ -39,16 +40,18 @@ const Home = () => {
                 <hr/>
                 <button style={{float:'left', marginLeft:'50px'}}><Link to="/Search" style={{textDecoration: 'none', color: 'black'}}>태그로 검색</Link></button>
                 <br/>
-                
-                <div class="container" id="postList">
-                {posts.map((post) => (
-                    <Post
-                        key={post.id}
-                        postObj={post}         
-                        isOwner={post.creatorId === user?.displayName} // boolean 값: 게시물 작성자만 삭제 버튼을 볼 수 있음
-                    />
-                    ))}
-                </div>
+                <Container fluid>
+                    <Row xs={2} sm={4}  md={6} lg={8} xl={10} xxl={12} className="g-4" style={{ gap: '1rem' }}>
+                        {posts.map((post, index) => (
+                        <Col margin="5px">
+                            <Post
+                            postObj={post}
+                            isOwner={post.creatorId === user?.displayName}
+                            />
+                        </Col>
+                        ))}
+                    </Row>
+                </Container>
             </div>
         );
     } else {  // 로그인되어 있음
@@ -60,20 +63,18 @@ const Home = () => {
                 <button style={{float:'left', marginLeft:'50px'}}><Link to="/Search" style={{textDecoration: 'none', color: 'black'}}>태그로 검색</Link></button>
                 <button style={{float:'left', marginLeft:'20px'}}><Link to="/Form" style={{textDecoration: 'none', color: 'black'}}>글쓰기</Link></button>
                 </div>
-                {/* 한 줄에 항목 3개씩 들어가도록 grid 시도: 실패*/}
-                <div class="container" id="postList">
-                    {posts.map((post, index) => (
-                        <>
-                            {(index % 3 === 0) && <div class="row"></div>}  {/* <div class="row">만 들어가야...*/}
+                <Container fluid>
+                    <Row xs={2} sm={4}  md={6} lg={8} xl={10} xxl={12} className="g-4" style={{ gap: '1rem' }}>
+                        {posts.map((post, index) => (
+                        <Col margin="5px">
                             <Post
-                            key={post.id}
-                            postObj={post}         
+                            postObj={post}
                             isOwner={post.creatorId === user?.displayName}
                             />
-                            {(index % 3 === 2) && <div class="row"></div>}  {/* </div>만 들어가야...*/}
-                        </>
-                    ))}
-                </div>
+                        </Col>
+                        ))}
+                    </Row>
+                </Container>
             </div>
             
         );

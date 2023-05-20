@@ -18,9 +18,11 @@
 🌟 node.js와 npm이 설치되어 있어야 합니다.
 (사용한 node 버전: v16.17.1, 사용한 npm 버전: 8.15.0)
 
-아래의 절차를 따라 프로젝트를 설치하고 실행해주세요.
+터미널에서 아래의 절차를 따라 프로젝트를 설치하고 실행해주세요.
 1. git clone https://github.com/jm3789/clothy.git
 2. clothy 디렉토리로 이동
 3. npm install
 4. npm start
 
+추가로, react-bootstrap 패키지가 설치되어 있어야 합니다.
+- npm install react-bootstrap bootstrap
