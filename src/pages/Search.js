@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { db } from '../firebase';
 import { onSnapshot, collection, orderBy, query } from "firebase/firestore"
 import Post from '../components/Post';
+import { useNavigate } from 'react-router-dom';
 
 const Search = () => {
     const { user } = UserAuth();
+    const navigate = useNavigate();
+
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {  
@@ -132,9 +134,7 @@ const Search = () => {
             </div>
         
             <div>
-                <button style={{ float: 'left', marginLeft: '20px' }}>
-                    <Link to="/" style={{ textDecoration: 'none', color: 'black' }}>뒤로</Link>
-                </button>
+                <button onClick={() => navigate('/')} style={{ float: 'left', marginLeft: '20px' }}>뒤로</button>
             </div>
             <br/>
             <hr/>

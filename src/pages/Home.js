@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { db } from '../firebase';
 import { onSnapshot, collection, orderBy, query } from "firebase/firestore"
 import { Container, Row, Col } from 'react-bootstrap';
 import Post from '../components/Post';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const { user } = UserAuth();
+    const navigate = useNavigate();
 
     const [posts, setPosts] = useState([]);
 
@@ -33,12 +34,12 @@ const Home = () => {
             <div>
                 <p style={{textAlign: 'right', marginRight:'50px'}}>현재 로그인되지 않은 상태입니다.</p>
                 <div style={{ width: '100%', textAlign: 'right' }}>
-                    <button style={{ marginLeft: 'auto', marginRight: '50px' }}>
-                        <Link to="/Login" style={{ textDecoration: 'none', color: 'black' }}>로그인</Link>
+                    <button onClick={() => navigate('/login')} style={{ marginLeft: 'auto', marginRight: '50px' }}>
+                        로그인
                     </button>
                 </div>
                 <hr/>
-                <button style={{float:'left', marginLeft:'50px'}}><Link to="/Search" style={{textDecoration: 'none', color: 'black'}}>태그로 검색</Link></button>
+                <button onClick={() => navigate('/search')} style={{float:'left', marginLeft:'50px'}}>태그로 검색</button>
                 <br/>
                 <Container fluid>
                     <Row xs={2} sm={4}  md={6} lg={8} xl={10} xxl={12} className="g-4" style={{ gap: '1rem' }}>
@@ -59,22 +60,25 @@ const Home = () => {
             <div>
                 <p style={{textAlign: 'right', marginLeft:'auto', marginRight:'50px'}}>안녕하세요, {user?.displayName}님!&#128512;</p>
                 <hr/>
-                <div>
-                <button style={{float:'left', marginLeft:'50px'}}><Link to="/Search" style={{textDecoration: 'none', color: 'black'}}>태그로 검색</Link></button>
-                <button style={{float:'left', marginLeft:'20px'}}><Link to="/Form" style={{textDecoration: 'none', color: 'black'}}>글쓰기</Link></button>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <button onClick={() => navigate('/search')} style={{float:'left', marginLeft:'50px'}}>태그로 검색</button>
+                    <button onClick={() => navigate('/form')} style={{float:'left', marginLeft:'20px', marginRight: 'auto'}}>글쓰기</button>
                 </div>
-                <Container fluid>
-                    <Row xs={2} sm={4}  md={6} lg={8} xl={10} xxl={12} className="g-4" style={{ gap: '1rem' }}>
-                        {posts.map((post, index) => (
-                        <Col margin="5px">
-                            <Post
-                            postObj={post}
-                            isOwner={post.creatorId === user?.displayName}
-                            />
-                        </Col>
-                        ))}
-                    </Row>
-                </Container>
+                <br/>
+                <div style={{ display: 'flex', marginLeft: '50px', marginBottom: '50px'}}>
+                    <Container fluid>
+                        <Row xs={2} sm={4}  md={6} lg={8} xl={10} xxl={12} className="g-4" style={{ gap: '1rem' }}>
+                            {posts.map((post, index) => (
+                            <Col margin="5px">
+                                <Post
+                                postObj={post}
+                                isOwner={post.creatorId === user?.displayName}
+                                />
+                            </Col>
+                            ))}
+                        </Row>
+                    </Container>
+                </div>
             </div>
             
         );

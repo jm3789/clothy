@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
@@ -38,7 +37,7 @@ const Account = () => {
           <button onClick={handleSignOut} style={{textAlign: 'left', marginLeft:'20px'}}>
             로그아웃
           </button>
-          <button style={{float:'left', marginLeft:'50px'}}><Link to="/" style={{textDecoration: 'none', color: 'black'}}>홈으로</Link></button>
+          <button onClick={() => navigate('/')} style={{float:'left', marginLeft:'50px'}}>홈으로</button>
           <hr/>
         </div>
       );

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { db } from '../firebase';
@@ -204,13 +203,15 @@ const Form = () => {
           </select>
         </div>
         
+        <br/>
         <h5 style={{textAlign: 'left', marginLeft:'50px'}}>'{clothes1Value}'의 '{clothes2Value}'(으)로 선택하셨습니다.</h5>
-        <button onClick={onSubmit} style={{float:'left', marginLeft:'50px'}}>등록</button>
-
+        <br/>
       </div>
 
-      <button style={{float:'left', marginLeft:'20px'}}><Link to="/" style={{textDecoration: 'none', color: 'black'}}>뒤로</Link></button>
-
+      <div style={{marginBottom: '80px'}}>
+        <button onClick={onSubmit} style={{float:'left', marginLeft:'50px'}}>등록</button>
+        <button onClick={() => navigate('/')} style={{float:'left', marginLeft:'20px'}}>뒤로</button>
+      </div>
     </div>
   );
 
