@@ -1,7 +1,8 @@
 import { useContext, createContext, useEffect, useState } from 'react';
 import {
   GoogleAuthProvider,
-  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
   onAuthStateChanged,
@@ -13,9 +14,18 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
+  const emailSignIn = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log('User signed in:', user);
+    } catch (error) {
+      console.log('Error signing in:', error);
+    }
+  };
+
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
-    // signInWithPopup(auth, provider);
     signInWithRedirect(auth, provider)
   };
 
@@ -34,7 +44,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ googleSignIn, logOut, user }}>
+    <AuthContext.Provider value={{ googleSignIn, logOut, user, emailSignIn }}>
       {children}
     </AuthContext.Provider>
   );
