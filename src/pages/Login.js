@@ -23,10 +23,25 @@ const Login = () => {
     }
   }
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    // 이메일로 로그인
-    emailSignIn(email, password);
+    
+    if (email === "" || password === "") {
+      alert("이메일과 비밀번호를 입력해주세요.");
+      return;
+    }
+  
+    try {
+      // 이메일로 로그인
+      await emailSignIn(email, password);
+    } catch (error) {
+      if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+      } else {
+        console.error(error);
+        alert("로그인 중에 오류가 발생했습니다. 나중에 다시 시도해주세요.");
+      }
+    }
   }
 
   const handleGoogleSignIn = async () => {  // 구글 로그인 버튼을 클릭하면
@@ -65,9 +80,13 @@ const Login = () => {
             onChange={onChange}
             required
           />
+          <br/>
           <input type="submit" value="로그인" />
+          <br/>
+          <button onClick={() => navigate('/signup')}>회원가입</button>
         </form>
       </div>
+      <br/>
       <p style={{textAlign: 'center'}}>또는</p>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px', marginBottom: '50px'}}>
         <GoogleButton onClick={handleGoogleSignIn}/>

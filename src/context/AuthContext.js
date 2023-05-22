@@ -1,7 +1,6 @@
 import { useContext, createContext, useEffect, useState } from 'react';
 import {
   GoogleAuthProvider,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
@@ -20,7 +19,12 @@ export const AuthContextProvider = ({ children }) => {
       const user = userCredential.user;
       console.log('User signed in:', user);
     } catch (error) {
-      console.log('Error signing in:', error);
+      if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+      } else {
+        console.error(error);
+        alert("로그인 중에 오류가 발생했습니다. 나중에 다시 시도해주세요.");
+      }
     }
   };
 

@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Account from './pages/Account';
 import Form from './pages/Form';
 import Search from './pages/Search';
+import SignUp from './pages/SignUp';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/account" element={<Account />} />
         <Route path="/form" element={<Form />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
       </AuthContextProvider>
     </div>
