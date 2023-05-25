@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { UserAuth } from '../context/AuthContext';
 import { db } from '../firebase';
 import { onSnapshot, collection, orderBy, query } from "firebase/firestore"
+import { Container, Row, Col } from 'react-bootstrap';
 import Post from '../components/Post';
 import { useNavigate } from 'react-router-dom';
 
@@ -139,14 +140,20 @@ const Search = () => {
             <br/>
             <hr/>
             <div id="searchNotice" style={{textAlign: 'left', marginLeft:'50px'}}></div>
-            <div id="postList">
-                {filteredPosts.map((post) => (
-                    <Post
-                        key={post.id}
-                        postObj={post}         
-                        isOwner={post.creatorId === user?.displayName} // boolean 값: 게시물 작성자만 삭제 버튼을 볼 수 있음
-                    />
-                ))}
+            <div id="postList" style={{ display: 'flex', marginLeft: '50px', marginBottom: '50px'}}>
+                <Container fluid>
+                    <Row xs={2} sm={4}  md={6} lg={8} xl={10} xxl={12} className="g-4" style={{ gap: '1rem' }}>
+                        {filteredPosts.map((post) => (
+                        <Col margin="5px">
+                            <Post
+                                key={post.id}
+                                postObj={post}
+                                isOwner={post.creatorId === user?.displayName} // boolean 값: 게시물 작성자만 삭제 버튼을 볼 수 있음
+                            />
+                        </Col>
+                        ))}
+                    </Row>
+                </Container>
             </div>
         </div>
     );
