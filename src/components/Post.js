@@ -4,10 +4,25 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { storage } from "../firebase";
 import { deleteObject, ref } from "firebase/storage";
 import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
 
 const Post = ({ postObj, isOwner }) => {
 
   const [showFullText, setShowFullText] = useState(false);
+  const [showPostDetail, setShowPostDetail] = useState(false);
+
+  const handleShowFullText = () => {
+    if (!showFullText) {setShowFullText(true)}
+    else {setShowFullText(false)}
+  };
+
+  const handleShowPostDetail = () => {
+    setShowPostDetail(true);
+  }
+
+  const handleClosePostDetail = () => {
+    setShowPostDetail(false);
+  }
 
   const onDeleteClick = async () => {  // 삭제 버튼을 누를 시
     const ok = window.confirm("삭제하시겠습니까?");
@@ -18,10 +33,7 @@ const Post = ({ postObj, isOwner }) => {
     }
   };
 
-  const handleShowFullText = () => {
-    if (!showFullText) {setShowFullText(true)}
-    else {setShowFullText(false)}
-  };
+  
  
 
   return (
@@ -42,10 +54,33 @@ const Post = ({ postObj, isOwner }) => {
           </Card.Text>
         </Card.Body>
       </Card>
+      <button onClick={handleShowPostDetail} style={{ marginRight: "10px"}}>상세</button>
       {isOwner && ( // 게시물 작성자만 삭제 버튼을 볼 수 있음
         <> 
           <button onClick={onDeleteClick}>삭제</button>
         </>
+      )}
+      {showPostDetail && ( // showDetail 상태에 따라 모달 창 렌더링
+        <Modal show={showPostDetail} onHide={handleClosePostDetail} size="xl">
+            <Modal.Header closeButton>
+              <Modal.Title style={{ fontSize: "20px" }}>{postObj.title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{ display: "flex" }}>
+              <div style={{ marginRight: "20px" }}>
+                <img src={postObj.downloadURL} alt="db image값" width="550" height="550" style={{ marginTop: "50px" }} /> {/* 이미지 표시 */}
+              </div>
+              <div>
+                <h4>{postObj.text}</h4>
+                <h4>#{postObj.clothes1} #{postObj.clothes2}</h4>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <div>
+                <h4>작성자: {postObj.creatorId}</h4>
+                <h4>작성 시간: {postObj.createdAt.toString()}</h4>
+              </div>
+            </Modal.Footer>
+        </Modal>
       )}
     </div>
   );
